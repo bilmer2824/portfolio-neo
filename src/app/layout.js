@@ -2,6 +2,7 @@ import Header from "@/Components/web/Header/Header_alisa";
 import Footer from "@/Components/web/Footer/Footer_alisa";
 // import Api from './api/index.js'
 import { ThemeProvider } from "./context/Context";
+import Check from './check/check.jsx'
 
 import "./globals.scss";
 export const metadata = {
@@ -15,9 +16,9 @@ export default function RootLayout({ children }) {
       <body id="body">
         <ThemeProvider>
           <Header />
+          <Check />
           {children}
           <Footer />
-          {/* <Api /> */}
         </ThemeProvider>
       </body>
     </html>

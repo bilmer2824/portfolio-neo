@@ -202,6 +202,10 @@
     border-radius: 10px;
     background: $background_day;
     box-shadow: $box_shadow_day;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     color: #24272C;
     font-family: Nunito;

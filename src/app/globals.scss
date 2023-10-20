@@ -9,7 +9,7 @@
     list-style: none;
 }
 body{
-    // background: #E6E7EE;
+    background: #E6E7EE;
     transition: 0.4s;
     
     &::-webkit-scrollbar{
@@ -33,4 +33,13 @@ body{
     width: 100%;
     margin: 0 auto;
     padding: 0;
+}
+.website_active{
+    transform: scale(0.80);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 160px;
+    max-height: 350px;
 }

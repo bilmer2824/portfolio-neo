@@ -22,7 +22,6 @@ import { format } from 'date-fns';
 
 
 
-
 export default function Home() {
     // console.log(params);
 
@@ -38,77 +37,21 @@ export default function Home() {
         openFolder_2,
         openFolder_3,
         openFolder_4,
-    } = useTheme();
-
-
-    const [porfolio, setPortfolio] = useState([])
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        fetch('https://portfoliobilmer.pythonanywhere.com/api/v5/portfolio-data/')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok, status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((porfolio) => {
-                setPortfolio(porfolio);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            });
-    }, [])
-    const portfolio_object = porfolio.map((item) => {
-        const inputDate = item.portfolio_data;
-        const parsedDate = new Date(inputDate);
-        const formattedDate = format(parsedDate, "dd MMMM yyyy");
         
-        const truncateString = (string = '', maxLength = 50) =>
-        string.length > maxLength
-            ?  `${string.substring(0, maxLength)}…`
-            : string
-        const portfolio_text = truncateString(item.portfolio_text, 76)
-
-
-        return (
-                <div className={`${styled.next_handler_content_list_item} ${dayMoon ? styled.background_color : ""}`} key={item.id}>
-                    <Image 
-                        alt='' 
-                        src={item.portfolio_img} 
-                        className={styled.next_handler_content_list_item_image} 
-                        fill
-                        sizes="(max-width: 320px) 100vw, 50vw"
-                    />
-                    <ul className={styled.next_handler_content_list}>
-                        <li className={styled.next_handler_content_list_item_title_blog}>
-                            <span className={`${styled.next_handler_content_list_item_title_blog_circle} ${dayMoon ? styled.next_handler_content_list_item_title_blog_circle_active : ""}`}></span>
-                            <h6 className={`${styled.next_handler_content_list_item_title} ${dayMoon ? styled.text_color : ""}`}>{item.uploader_name}</h6>
-                        </li>
-                        <li className={styled.next_handler_content_list_item_title_blog}>
-                            <FaCalendarAlt className={`${styled.next_handler_content_list_item_title_blog_icon} ${dayMoon ? styled.text_color : ""}`} />
-                            <p className={`${styled.next_handler_content_list_item_title_blog_data} ${dayMoon ? styled.text_color : ""}`}>{formattedDate}</p>
-                        </li>
-                    </ul>
-                    <h4 className={`${styled.next_handler_content_list_title}  ${dayMoon ? styled.text_color : ""}`}>{item.portfolio_title}</h4>
-                    <p className={`${styled.next_handler_content_list_text}  ${dayMoon ? styled.text_color : ""}`}>{portfolio_text}</p>
-                    <div className={styled.next_handler_content_list_btn_blog}>
-                        <a href={item.portfolio_link} target='_blank' className={`${styled.next_handler_content_list_btn}  ${dayMoon ? styled.main_content_btn_active : ""}`}>Learn More</a>
-                        <FaRegSnowflake className={`${styled.next_handler_content_list_btn_icon}  ${dayMoon ? styled.text_color : ""}`} />
-                    </div>
-                </div>
-        )
-    })
-    const portfolio_data = portfolio_object.slice(-2)
-
-
-
-
-
+        sendEmail,
+        onChangeName,
+        onChangeEmail,
+        onChangeMessage,
+        userName,
+        userEmail,
+        userMessage,
+        
+        portfolio_data,
+        
+    } = useTheme();
+    
+    
     const [certificateData, setCertificate] = useState([]);
-
     useEffect(() => {
         fetch('https://portfoliobilmer.pythonanywhere.com/api/v2/certificate-class/')
             .then((response) => {
@@ -148,8 +91,6 @@ export default function Home() {
             </div>
         )
     });
-
-
     return (
         <>
             <section className={styled.main}>
@@ -169,8 +110,12 @@ export default function Home() {
                             </li>
                         </ul>
                         <div className={styled.main_content_btn_group}>
-                            <button className={`${styled.main_content_btn} ${dayMoon ? styled.main_content_btn_active : ""}`}>Download</button>
-                            <button className={`${styled.main_content_btn} ${dayMoon ? styled.main_content_btn_active : ""}`}>Contact</button>
+                            
+                                <button className={`${styled.main_content_btn} ${dayMoon ? styled.main_content_btn_active : ""}`}>Download</button>
+                            
+                            <Link href="contact">
+                                <button className={`${styled.main_content_btn} ${dayMoon ? styled.main_content_btn_active : ""}`}>Contact</button>
+                            </Link>
                         </div>
                         <ul className={styled.main_content_job_list}>
 
@@ -348,66 +293,30 @@ export default function Home() {
             <section className={styled.next_sertificate}>
                 <div className="container-main">
                     <div className={styled.next_sertificate_content}>
-
-
-                        {/* <div className={`${styled.next_sertificate_content_logo_page} ${dayMoon ? styled.shadow_inset_active : ""}`}>
-                            <div className={`${styled.next_sertificate_content_logo_blog} ${dayMoon ? styled.background_color : ""}`}>
-                                <Image src="https://github.com/BilmerIslamov/number-project/assets/142201562/afcbd80b-6a2e-4e13-820c-7e1727554f69" alt='logo' className={styled.next_sertificate_content_logo_blog_image} fill />
-                            </div>
-                            <div className={`${styled.next_sertificate_content_info_blog} ${dayMoon ? styled.background_color : ""}`}>
-                                <Link href="https://proweb.uz/" className={`${styled.next_sertificate_content_info_blog_link} ${dayMoon ? styled.text_color : ""}`} target='_blank'>PROWEB</Link>
-                                <p className={styled.next_sertificate_content_info_blog_data}>
-                                    <FaCalendarAlt className={`${styled.next_sertificate_content_info_blog_data_icon} ${dayMoon ? styled.text_color : ""}`} />
-                                    <span className={`${styled.next_sertificate_content_info_blog_data_text} ${dayMoon ? styled.text_color : ""}`}>9&nbsp;October&nbsp;2022</span>
-                                </p>
-                            </div>
-                        </div> */}
-
                         {sertificat}
-
-
-                        {/* <div className={`${styled.next_sertificate_content_logo_page} ${dayMoon ? styled.shadow_inset_active : ""}`}>
-                            <div className={`${styled.next_sertificate_content_logo_blog} ${dayMoon ? styled.background_color : ""}`}>
-                                <Image src="https://github.com/BilmerIslamov/number-project/assets/142201562/afcbd80b-6a2e-4e13-820c-7e1727554f69" alt='logo' className={styled.next_sertificate_content_logo_blog_image} fill />
-                            </div>
-                            <div className={`${styled.next_sertificate_content_info_blog} ${dayMoon ? styled.background_color : ""}`}>
-                                <Link href="https://proweb.uz/" className={`${styled.next_sertificate_content_info_blog_link} ${dayMoon ? styled.text_color : ""}`} target='_blank'>PROWEB</Link>
-                                <p className={styled.next_sertificate_content_info_blog_data}>
-                                    <FaCalendarAlt className={`${styled.next_sertificate_content_info_blog_data_icon} ${dayMoon ? styled.text_color : ""}`} />
-                                    <span className={`${styled.next_sertificate_content_info_blog_data_text} ${dayMoon ? styled.text_color : ""}`}>9&nbsp;October&nbsp;2022</span>
-                                </p>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </section>
             <section className={styled.next_form_section}>
                 <div className="container-main">
-                    <form
-                        action=""
-                        // onSubmit={handleSubmit} 
-                        className={`
-                                ${styled.next_form} 
-                                ${dayMoon ? styled.background_color : ""}
-                            `}
-                    >
+                    
+                    
+                    
+                    <form action="" onSubmit={sendEmail} className={` ${styled.next_form}  ${dayMoon ? styled.background_color : ""}`}>
                         <label htmlFor="" className={styled.next_form_label}>
                             <span className={`${styled.next_form_label_span} ${dayMoon ? styled.text_color : ""}`} >Your Name</span>
                             <div className={styled.next_form_label_group}>
                                 <span className={`${styled.next_form_label_span_bg} ${dayMoon ? styled.text_color_plus : ""}`}>
                                     <BiUserCircle />
                                 </span>
-                                <input
-                                    type="text"
-                                    className={`
-                                        ${styled.next_form_label_input} 
-                                        ${dayMoon ? styled.shadow_inset_active_plus : ""}
-                                    `}
+                                <input 
+                                    onChange={onChangeName} 
+                                    type="text" 
+                                    name="userName" 
+                                    className={` ${styled.next_form_label_input}  ${dayMoon ? styled.shadow_inset_active_plus : ""}`} 
                                     required
-                                    name="user_name"
-                                // value={formData.user_name}
-                                // onChange={handleChange}
-                                />
+                                    value={userName}
+                                 />
                             </div>
                         </label>
 
@@ -417,32 +326,26 @@ export default function Home() {
                                 <span className={`${styled.next_form_label_span_bg} ${dayMoon ? styled.text_color_plus : ""}`}>
                                     <MdOutlineEmail />
                                 </span>
-                                <input
-                                    type="email"
-                                    className={`
-                                            ${styled.next_form_label_input}
-                                            ${dayMoon ? styled.shadow_inset_active_plus : ""}
-                                    `}
+                                <input 
+                                    onChange={onChangeEmail} 
+                                    type="email" 
+                                    name="userEmail"
+                                    className={` ${styled.next_form_label_input} ${dayMoon ? styled.shadow_inset_active_plus : ""}`}
                                     required
-                                    name="user_email"
-                                // value={formData.user_email}
-                                // onChange={handleChange}
+                                    value={userEmail}
                                 />
                             </div>
                         </label>
 
                         <label htmlFor="" className={styled.next_form_label}>
                             <span className={`${styled.next_form_label_span} ${dayMoon ? styled.text_color : ""}`}>Your Message</span>
-                            <textarea
-                                type="text"
-                                className={`
-                                        ${styled.next_form_label_textarea} 
-                                        ${dayMoon ? styled.shadow_inset_active_plus : ""}
-                                `}
+                            <textarea 
+                                onChange={onChangeMessage} 
+                                type="text" 
+                                name="userMessage"  
+                                className={` ${styled.next_form_label_textarea}  ${dayMoon ? styled.shadow_inset_active_plus : ""} `} 
                                 required
-                                name="user_message"
-                            // value={formData.user_message}
-                            // onChange={handleChange}
+                                value={userMessage}
                             />
                         </label>
                         <div className={styled.next_form_section_btn_group}>
@@ -450,6 +353,9 @@ export default function Home() {
                             <button type='submit' className={`${styled.next_form_section_btn} ${dayMoon ? styled.main_content_btn_active : ""}`} >Send Message</button>
                         </div>
                     </form>
+                    
+                    
+                    
                 </div>
             </section>
         </>

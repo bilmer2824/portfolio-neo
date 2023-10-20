@@ -12,6 +12,8 @@
     "aos": "^2.3.4",
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
+    "emailjs": "^4.0.3",
+    "emailjs-com": "^3.2.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",
